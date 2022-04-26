@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32414.318
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScaleToolsLibrary", "ScaleToolsLibrary\ScaleToolsLibrary.csproj", "{32B91C7D-D8DF-4A8B-BA29-FF61DA55F19B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2CFE8508-CCB2-4180-B064-541782D680FA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{32B91C7D-D8DF-4A8B-BA29-FF61DA55F19B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32B91C7D-D8DF-4A8B-BA29-FF61DA55F19B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32B91C7D-D8DF-4A8B-BA29-FF61DA55F19B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32B91C7D-D8DF-4A8B-BA29-FF61DA55F19B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {65A8424A-D476-4128-B499-A12568942EBD}
+	EndGlobalSection
+EndGlobal
