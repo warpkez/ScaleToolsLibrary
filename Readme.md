@@ -4,7 +4,7 @@ A C# class library to perform calculations for scale modelling
 
 #### ScaleRecords
 
-Contains the parameters for storing the real and scale world measurements
+Class object for storing the real and scale world measurements
 
 #### ScaleTools
 
@@ -37,3 +37,11 @@ As above but in scale world millimeters.
 **public double RealWorldtoSWMetric(double measurement, double scale, Metrics metrics)**
 
 Takes real world decimal measurements and returns in millimeters.
+
+---
+
+### ToDo:
+
+- [x] Create initial library and publish test NuGet packages.
+- [ ] Add ability to output to list or collection to simplify iterative tasks.
+- [ ] Add code to convert decimal inches to inches and fractions.
