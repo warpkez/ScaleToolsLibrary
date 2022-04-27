@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScaleToolsLibrary", "ScaleToolsLibrary\ScaleToolsLibrary.csproj", "{32B91C7D-D8DF-4A8B-BA29-FF61DA55F19B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2CFE8508-CCB2-4180-B064-541782D680FA}"
+	ProjectSection(SolutionItems) = preProject
+		Readme.md = Readme.md
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsole", "TestConsole\TestConsole.csproj", "{A37FBE62-1AE2-44B0-82ED-D00F475B5AF8}"
 EndProject
