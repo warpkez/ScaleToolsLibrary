@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <RepositoryUrl>https://github.com/warpkez/ScaleToolsLibrary</RepositoryUrl>
-    <Version>1.0.3</Version>
+    <Version>1.0.4.1</Version>
     <PackageId>WarpKez.$(AssemblyName)</PackageId>
     <Authors>Wayne Jackson</Authors>
     <Product>WarpKez.$(AssemblyName)</Product>

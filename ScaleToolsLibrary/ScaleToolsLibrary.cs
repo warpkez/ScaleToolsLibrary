@@ -18,10 +18,28 @@ public class ScaleRecords
     public double swMeters { get; set; }
     public double swCentimeters { get; set; }
     public double swMillimeters { get; set; }
+
+    // Scale used
+    public double Scale { get; set; }
+}
+
+/// <summary>
+/// Basic class for predefined frational increments of an inch.
+/// 1/16, 1/8, 1/4, and 1/2
+/// </summary>
+public class FractionOfInches
+{
+    public const double sixteenth = 1.0 / 16.0;
+    public const double eighth = 1.0 / 8.0;
+    public const double quarter = 1.0 / 4.0;
+    public const double half = 1.0 / 2.0;
 }
 
 public class ScaleTools
 {
+    /// <summary>
+    /// Enumerated metrics
+    /// </summary>
     public enum Metrics
     {
         Feet,
@@ -33,7 +51,8 @@ public class ScaleTools
 
     // Rounding to this many decimal places
     private const int precision = 3;
-    private const double Inch2mm = 25.4;
+    private const double InchTomm = 25.4;
+    private const double FeetToInches = 12.0;
 
     /// <summary>
     /// Converts real world measurement to Scale world millimeters
@@ -46,6 +65,9 @@ public class ScaleTools
     {
         ScaleRecords s = new();
         double scaled = 0.0;
+        if (measurement < 0) measurement *= -1;
+        if (scale < 0) scale *= -1;
+        s.Scale = scale;
 
         if (scale > 0)
         {
@@ -53,13 +75,13 @@ public class ScaleTools
             {
                 case Metrics.Feet:
                     s.rwFeet = Math.Floor(measurement);
-                    s.rwInches = Math.Round((measurement - s.rwFeet) * 12, precision);
+                    s.rwInches = Math.Round((measurement - s.rwFeet) * FeetToInches, precision);
 
                     scaled = (measurement) / scale;
                     s.swFeet = Math.Floor(scaled);
-                    s.swInches = Math.Round((scaled - s.swFeet) * 12, precision);
-                    
-                    s.swMillimeters = Math.Round(((s.swFeet * 12) + s.swInches) * 25.4, precision);
+                    s.swInches = Math.Round((scaled - s.swFeet) * FeetToInches, precision);
+
+                    s.swMillimeters = Math.Round(((s.swFeet * FeetToInches) + s.swInches) * InchTomm, precision);
                     s.swCentimeters = Math.Round(s.swMillimeters / 10, precision);
                     s.swMeters = Math.Round(s.swMillimeters / 1000, precision);
                     break;
@@ -71,8 +93,8 @@ public class ScaleTools
                     scaled = (measurement) / scale;
                     s.swFeet = 0;
                     s.swInches = Math.Round(scaled, precision);
-                    
-                    s.swMillimeters = Math.Round(scaled * 25.4, precision);
+
+                    s.swMillimeters = Math.Round(scaled * InchTomm, precision);
                     s.swCentimeters = Math.Round(s.swMillimeters / 10, precision);
                     s.swMeters = Math.Round(s.swMillimeters / 1000, precision);
                     break;
@@ -82,11 +104,11 @@ public class ScaleTools
                     s.rwMeters = measurement;
                     s.rwCentimeters = measurement * 100;
                     s.rwMillimeters = measurement * 1000;
-                    
+
                     scaled = (measurement) / scale;
 
                     s.swMeters = Math.Round(scaled, precision);
-                    s.swCentimeters = Math.Round(scaled * 100,precision);
+                    s.swCentimeters = Math.Round(scaled * 100, precision);
                     s.swMillimeters = Math.Round(scaled * 1000, precision);
                     break;
 
@@ -112,10 +134,45 @@ public class ScaleTools
                     s.swCentimeters = Math.Round(scaled / 10, precision);
                     s.swMillimeters = Math.Round(scaled, precision);
                     break;
-                default:break;
+                default: break;
             }
         }
         return s;
+    }
+
+    /// <summary>
+    /// Generates a table derived from real world feet measurements
+    /// incrementing the inches by a defined step
+    /// </summary>
+    /// <param name="feet">Measurement in feet</param>
+    /// <param name="step">Fractions of an inche to increment</param>
+    /// <param name="scale">Modelling scale</param>
+    /// <returns>List<ScaleRecords></returns>
+    public List<ScaleRecords> RWFeetToSWMetricList(double feet, double step, double scale)
+    {
+        List<ScaleRecords> RecordList = new();
+        if (step < 0) step *= -1;
+        if (feet < 0) feet *= -1;
+        if (scale < 0) scale *= -1;
+
+        for (double inches = 0.0; inches < 12.0; inches += step)
+        {
+            //RecordList = new();
+            ScaleRecords s = new();
+            s.Scale = scale;
+            s.rwFeet = feet;
+            s.rwInches = inches;
+
+            double scaled = (((feet * FeetToInches) + inches) * InchTomm) / scale;
+
+            s.swMillimeters = Math.Round(scaled, precision);
+            s.swCentimeters = Math.Round((scaled / 10), precision);
+            s.swMeters = Math.Round((scaled / 1000), precision);
+
+            RecordList.Add(s);
+        }
+
+        return RecordList;
     }
 
     /// <summary>
@@ -135,10 +192,14 @@ public class ScaleTools
     /// <returns>double</returns>
     public double RWImperialToSWImperial(double feet, double inches, double scale)
     {
+        if (feet < 0) feet *= -1;
+        if (inches < 0) inches *= -1;
+        if (scale < 0) scale *= -1;
+
         double result = -1.0;
         if (scale > 0)
         {
-            result = Math.Round(((feet * 12) + inches) / scale, precision);
+            result = Math.Round(((feet * FeetToInches) + inches) / scale, precision);
         }
 
         return result;
@@ -153,10 +214,15 @@ public class ScaleTools
     /// <returns>double</returns>
     public double RWImperialToSWMetric(double feet, double inches, double scale)
     {
+        if (feet < 0) feet *= -1;
+        if (inches < 0) inches *= -1;
+        if (scale < 0) scale *= -1;
+
+
         double result = -1.0;
         if (scale > 0)
         {
-            result = Math.Round((((feet * 12) + inches) * 25.4) / scale, precision);
+            result = Math.Round((((feet * FeetToInches) + inches) * InchTomm) / scale, precision);
         }
 
         return result;
@@ -171,6 +237,9 @@ public class ScaleTools
     /// <returns>double</returns>
     public double RealWorldtoSWMetric(double measurement, double scale, Metrics metrics)
     {
+        if (measurement < 0) measurement *= -1;
+        if (scale < 0) scale *= -1;
+
         double results = -1.0;
 
         if (scale > 0)
@@ -178,10 +247,10 @@ public class ScaleTools
             switch (metrics)
             {
                 case Metrics.Feet:
-                    results = ((measurement * 12) * Inch2mm) / scale;
+                    results = ((measurement * FeetToInches) * InchTomm) / scale;
                     break;
                 case Metrics.Inches:
-                    results = ((measurement) * Inch2mm) / scale;
+                    results = ((measurement) * InchTomm) / scale;
                     break;
                 case Metrics.Meters:
                     results = (ConvertMetric(measurement, Metrics.Meters) / scale);
